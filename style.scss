@@ -1,42 +1,41 @@
+@import './scss/_vars.scss';
+@import './scss/menu.scss';
+
 @font-face {
     font-family: Outfit;
     src: url('./assets/Outfit-VariableFont_wght.ttf');
 }
 
-$dark-navy: #1A2A33;
-$semi-dark-navy: #1F3641;
-$silver: #A8BFC9;
-$silver-hover: #DBE8ED;
-$light-blue: #31C3BD;
-$light-blue-hover: #65E9E4;
-$light-yellow: #F2B137;
-$light-yellow-hover: #FFC860;
-
 .heading-large {
     font-size: 40px;
     letter-spacing: 2.5px;
     font-weight: bold;
+    font-family: Outfit, sans-serif;
 }
 
 .heading-medium {
     font-size: 24px;
     letter-spacing: 1.5px;
     font-weight: bold;
+    font-family: Outfit, sans-serif;
 }
 
 .heading-small {
     font-size: 20px;
     letter-spacing: 1.25px;
     font-weight: bold;
+    font-family: Outfit, sans-serif;
 }
 
 .heading-extra-small {
     font-size: 16px;
     letter-spacing: 1px;
     font-weight: bold;
+    font-family: Outfit, sans-serif;
 }
 
-body {
+body,
+#app {
     margin: 0;
     padding: 0;
     font-family: Outfit, sans-serif;
@@ -44,4 +43,13 @@ body {
     letter-spacing: 0.88px;
     font-weight: 500;
     background-color: $dark-navy;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+#app {
+    padding: 0 10px;
 }
