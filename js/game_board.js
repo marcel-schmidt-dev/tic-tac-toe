@@ -1,10 +1,13 @@
-export function renderGameBoard() {
+export function renderGameBoard(handlePlayerTurn) {
     const gameboard = document.createElement("div");
-    gameboard.id = "game-board"
+    gameboard.id = "game-board";
 
     for (let index = 0; index < 9; index++) {
-        gameboard.innerHTML += '<div class="game-cell"></div>'
+        const cell = document.createElement("div");
+        cell.classList.add("game-cell");
+        cell.addEventListener("click", () => handlePlayerTurn(index));
+        gameboard.appendChild(cell);
     }
 
-    return gameboard.outerHTML;
+    return gameboard;
 }

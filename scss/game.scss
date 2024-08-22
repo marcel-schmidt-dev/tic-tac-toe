@@ -11,14 +11,20 @@
             width: 100%;
         }
 
-        div:nth-child(2) div {
-            padding: 13px 30px 19px 30px;
+        .logo {
+            display: block;
+        }
+
+        .turn-indicator {
             background-color: $semi-dark-navy;
             display: flex;
             align-items: center;
+            justify-content: center;
             border-radius: 10px;
             -webkit-box-shadow: inset 0px -4px 0px 0px #10212A;
             box-shadow: inset 0px -4px 0px 0px #10212A;
+            max-width: 140px;
+            height: 52px;
 
             svg {
                 max-width: 20px;
@@ -44,6 +50,12 @@
             -webkit-box-shadow: inset 0px -4px 0px 0px rgba(#000000, 0.25);
             box-shadow: inset 0px -4px 0px 0px rgba(#000000, 0.25);
             border-radius: 10px;
+            cursor: pointer;
+            transition: all 300ms ease-in-out;
+
+            &:hover {
+                background-color: $silver-hover;
+            }
 
             img {
                 display: block;
@@ -67,6 +79,19 @@
             background-color: $semi-dark-navy;
             border-radius: 15px;
             cursor: pointer;
+            padding: 38px;
+
+            svg {
+                display: block;
+            }
+
+            &.x svg {
+                fill: $light-blue;
+            }
+
+            &.o svg {
+                fill: $light-yellow;
+            }
         }
     }
 
