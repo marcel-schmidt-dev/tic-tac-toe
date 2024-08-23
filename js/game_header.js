@@ -1,8 +1,8 @@
 import logo from '../assets/logo.svg';
 import reset from '../assets/icon-restart.svg';
-import { iconX } from './icons';
+import { iconX, iconO } from './icons';
 
-export function renderGameHeader() {
+export function renderGameHeader(turnPlayer) {
     const header = document.createElement('div');
     header.classList.add('header');
 
@@ -15,7 +15,8 @@ export function renderGameHeader() {
 
     const turnIndicator = document.createElement('div');
     turnIndicator.classList.add('turn-indicator');
-    turnIndicator.innerHTML = `${iconX()} <span>Turn</span>`;
+    const currentIcon = turnPlayer ? iconX() : iconO();
+    turnIndicator.innerHTML = `${currentIcon} <span>Turn</span>`;
 
     const resetButtonContainer = document.createElement('div');
     const resetButton = document.createElement('button');
