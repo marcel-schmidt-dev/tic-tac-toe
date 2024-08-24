@@ -1,9 +1,9 @@
-export function renderGameStats(stats) {
+export function renderGameStats(stats, pickedSymbol, mode) {
     const statContainer = document.createElement('div');
-    statContainer.classList.add('game-stats');
+    statContainer.id = 'game-stats';
     statContainer.innerHTML = /*html*/`
         <div>
-            X (You)
+            X (${pickedSymbol ? 'p1' : mode === 'cpu' ? 'cpu' : 'p2'})
             <span class="heading-medium">${stats[0]}</span>
         </div>
         <div>
@@ -11,7 +11,7 @@ export function renderGameStats(stats) {
             <span class="heading-medium">${stats[1]}</span>
         </div>
         <div>
-            O (CPU)
+            O (${!pickedSymbol ? 'p1' : mode === 'cpu' ? 'cpu' : 'p2'})
             <span class="heading-medium">${stats[2]}</span>
         </div>
     `

@@ -1,0 +1,31 @@
+#game #game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 20px 0;
+
+    .game-cell {
+        width: 100%;
+        aspect-ratio: 1/1;
+        max-width: 140px;
+        max-height: 140px;
+        -webkit-box-shadow: inset 0px -8px 0px 0px #10212A;
+        box-shadow: inset 0px -8px 0px 0px #10212A;
+        background-color: $semi-dark-navy;
+        border-radius: 15px;
+        cursor: pointer;
+        padding: 38px;
+
+        svg {
+            display: block;
+        }
+
+        &.x svg {
+            fill: $light-blue;
+        }
+
+        &.o svg {
+            fill: $light-yellow;
+        }
+    }
+}

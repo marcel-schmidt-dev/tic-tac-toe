@@ -4,7 +4,7 @@ import { iconX, iconO } from './icons';
 
 export function renderGameHeader(turnPlayer) {
     const header = document.createElement('div');
-    header.classList.add('header');
+    header.id = 'header';
 
     const logoContainer = document.createElement('div');
     const logoImg = document.createElement('img');

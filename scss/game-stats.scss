@@ -1,0 +1,26 @@
+#game #game-stats {
+    display: flex;
+    gap: 20px;
+
+    div {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        color: $dark-navy;
+        background-color: $silver;
+        border-radius: 15px;
+        text-transform: uppercase;
+
+        &:first-child {
+            background-color: $light-blue;
+        }
+
+        &:last-child {
+            background-color: $light-yellow;
+        }
+
+        span {
+            display: block;
+        }
+    }
+}

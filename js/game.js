@@ -69,14 +69,15 @@ const resetGame = () => {
     renderGame();
 }
 
-export function renderGame() {
+export function renderGame(mode, pickedSymbol) {
     const app = document.getElementById('app');
+    app.innerHTML = '';
     let game = document.createElement('div');
     game.id = "game";
 
     game.appendChild(renderGameHeader(turnPlayer));
     game.appendChild(renderGameBoard(handlePlayerTurn, gameBoard, turnPlayer));
-    game.appendChild(renderGameStats(stats));
+    game.appendChild(renderGameStats(stats, pickedSymbol, mode));
 
     app.appendChild(game);
 
