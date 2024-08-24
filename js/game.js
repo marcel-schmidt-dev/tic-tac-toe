@@ -1,11 +1,14 @@
 import { renderGameHeader } from './game_header';
 import { renderGameBoard } from './game_board';
 import { renderGameStats } from './game_stats';
+import { renderWinner } from './winner';
 
-let gameBoard = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+let gameBoard = [0, 0, 0, 0, 0, 0, 0, 0, 0]; // 1 = x  2 = o
 let turnPlayer = true;
 let gameOver = false;
 let stats = [0, 0, 0];
+let gameMode;
+let symbol;
 
 const winningCombinations = [
     [0, 1, 2],
@@ -29,26 +32,25 @@ const checkTie = () => {
     return gameBoard.every(cell => cell !== 0);
 }
 
-const handlePlayerTurn = (event) => {
-    const index = Array.prototype.indexOf.call(event.target.parentElement.children, event.target);
+const handlePlayerTurn = (index) => {
 
     if (gameBoard[index] !== 0 || gameOver) return;
 
     gameBoard[index] = turnPlayer ? 1 : 2;
 
     if (checkWin(turnPlayer ? 1 : 2)) {
-        alert(`Player ${turnPlayer ? 'X' : 'O'} wins!`);
+        gameOver = true;
+        const result = turnPlayer ? 1 : 2;
         handleStats(turnPlayer);
-        gameOver = true;
+        renderGame(result);
     } else if (checkTie()) {
-        alert("It's a tie!");
-        handleStats(null);
         gameOver = true;
+        handleStats(null);
+        renderGame('tie');
+    } else {
+        turnPlayer = !turnPlayer;
+        renderGame();
     }
-
-    turnPlayer = !turnPlayer;
-    game.remove();
-    renderGame();
 }
 
 const handleStats = (turnPlayer) => {
@@ -61,26 +63,49 @@ const handleStats = (turnPlayer) => {
     }
 }
 
-const resetGame = () => {
+export function startGame(mode, pickedSymbol) {
     gameBoard = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    stats = [0, 0, 0];
     turnPlayer = true;
     gameOver = false;
-    game.remove();
+    gameMode = mode;
+    symbol = pickedSymbol;
     renderGame();
 }
 
-export function renderGame(mode, pickedSymbol) {
+export function resetRound() {
+    gameBoard = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    turnPlayer = true;
+    gameOver = false;
+    renderGame();
+}
+
+export function returnToMenu() {
+    const app = document.getElementById('app');
+    app.innerHTML = '';
+    import('./menu.js').then(module => {
+        module.renderMenu();
+    });
+}
+
+export function renderGame(result = null) {
     const app = document.getElementById('app');
     app.innerHTML = '';
     let game = document.createElement('div');
     game.id = "game";
 
     game.appendChild(renderGameHeader(turnPlayer));
-    game.appendChild(renderGameBoard(handlePlayerTurn, gameBoard, turnPlayer));
-    game.appendChild(renderGameStats(stats, pickedSymbol, mode));
+    game.appendChild(renderGameBoard(handlePlayerTurn, gameBoard));
+    game.appendChild(renderGameStats(stats, gameMode, symbol));
+
+    if (result !== null) {
+        game.appendChild(renderWinner(result, gameMode, symbol));
+    }
 
     app.appendChild(game);
 
     const resetButton = document.getElementById('reset-btn');
-    resetButton.addEventListener('click', resetGame);
+    if (resetButton) {
+        resetButton.addEventListener('click', resetRound);
+    }
 }

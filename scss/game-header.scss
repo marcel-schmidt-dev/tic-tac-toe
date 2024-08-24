@@ -18,6 +18,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 10px;
+
         -webkit-box-shadow: inset 0px -4px 0px 0px #10212A;
         box-shadow: inset 0px -4px 0px 0px #10212A;
         max-width: 140px;
@@ -44,11 +45,11 @@
         border: none;
         padding: 16px;
         background-color: $silver;
-        -webkit-box-shadow: inset 0px -4px 0px 0px rgba(#000000, 0.25);
-        box-shadow: inset 0px -4px 0px 0px rgba(#000000, 0.25);
         border-radius: 10px;
         cursor: pointer;
         transition: all 300ms ease-in-out;
+        -webkit-box-shadow: inset 0px -4px 0px 0px #6B8997;
+        box-shadow: inset 0px -4px 0px 0px #6B8997;
 
         &:hover {
             background-color: $silver-hover;

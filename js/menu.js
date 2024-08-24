@@ -1,7 +1,6 @@
-import { iconO } from './icons';
-import { iconX } from './icons';
+import { iconO, iconX } from './icons';
 import logo from '../assets/logo.svg';
-import { renderGame } from './game';
+import { startGame } from './game';
 
 export function renderMenu() {
     const app = document.getElementById('app');
@@ -11,15 +10,13 @@ export function renderMenu() {
 
     const handlePick = () => {
         pickedSymbol = !pickedSymbol;
-        console.log(pickedSymbol);
     };
 
     const handleGameMode = (e) => {
-        if (e.target.id === "new-game-cpu") {
-            renderGame("cpu", pickedSymbol);
-        }
-        else {
-            renderGame("player", pickedSymbol);
+        if (e.target.id === 'new-game-cpu') {
+            startGame('cpu', pickedSymbol);
+        } else {
+            startGame('player', pickedSymbol);
         }
     }
 
@@ -44,6 +41,6 @@ export function renderMenu() {
     app.appendChild(menu);
 
     menu.querySelector('.pick-player input').addEventListener('click', handlePick);
-    menu.querySelector('#menu #new-game-cpu').addEventListener('click', (e) => handleGameMode(e));
-    menu.querySelector('#menu #new-game-player').addEventListener('click', (e) => handleGameMode(e));
+    menu.querySelector('#new-game-cpu').addEventListener('click', handleGameMode);
+    menu.querySelector('#new-game-player').addEventListener('click', handleGameMode);
 }
