@@ -5,14 +5,14 @@
     margin: 20px 0;
 
     &.x .game-cell:not(.x):not(.o):hover {
-        background-image: url('../assets/icon-x-outline.svg');
+        background-image: url('/icon-x-outline.svg');
         background-size: 64px;
         background-repeat: no-repeat;
         background-position: center;
     }
 
     &.o .game-cell:not(.x):not(.o):hover {
-        background-image: url('../assets/icon-o-outline.svg');
+        background-image: url('/icon-o-outline.svg');
         background-size: 64px;
         background-repeat: no-repeat;
         background-position: center;
