@@ -2,6 +2,7 @@ import { renderGameHeader } from './game_header';
 import { renderGameBoard } from './game_board';
 import { renderGameStats } from './game_stats';
 import { renderWinner } from './winner';
+import { renderMenu } from './menu';
 
 let gameBoard = [0, 0, 0, 0, 0, 0, 0, 0, 0]; // 1 = x  2 = o
 let turnPlayer = true;
@@ -22,10 +23,13 @@ const winningCombinations = [
 ];
 
 const checkWin = (player) => {
-    return winningCombinations.some(combination => {
+    for (const combination of winningCombinations) {
         const [a, b, c] = combination;
-        return gameBoard[a] === player && gameBoard[b] === player && gameBoard[c] === player;
-    });
+        if (gameBoard[a] === player && gameBoard[b] === player && gameBoard[c] === player) {
+            return combination;
+        }
+    }
+    return null;
 }
 
 const checkTie = () => {
@@ -33,16 +37,16 @@ const checkTie = () => {
 }
 
 const handlePlayerTurn = (index) => {
-
     if (gameBoard[index] !== 0 || gameOver) return;
 
     gameBoard[index] = turnPlayer ? 1 : 2;
 
-    if (checkWin(turnPlayer ? 1 : 2)) {
+    const winningCombo = checkWin(turnPlayer ? 1 : 2);
+    if (winningCombo) {
         gameOver = true;
         const result = turnPlayer ? 1 : 2;
         handleStats(turnPlayer);
-        renderGame(result);
+        renderGame(result, winningCombo);
     } else if (checkTie()) {
         gameOver = true;
         handleStats(null);
@@ -50,7 +54,56 @@ const handlePlayerTurn = (index) => {
     } else {
         turnPlayer = !turnPlayer;
         renderGame();
+
+        if (gameMode === 'cpu' && !turnPlayer) {
+            setTimeout(cpuMove, 500);
+        }
     }
+}
+
+const cpuMove = () => {
+    const cpu = 2;
+    const player = 1;
+
+    for (let i = 0; i < winningCombinations.length; i++) {
+        const [a, b, c] = winningCombinations[i];
+        if (gameBoard[a] === cpu && gameBoard[b] === cpu && gameBoard[c] === 0) {
+            return handlePlayerTurn(c);
+        }
+        if (gameBoard[a] === cpu && gameBoard[c] === cpu && gameBoard[b] === 0) {
+            return handlePlayerTurn(b);
+        }
+        if (gameBoard[b] === cpu && gameBoard[c] === cpu && gameBoard[a] === 0) {
+            return handlePlayerTurn(a);
+        }
+    }
+
+    for (let i = 0; i < winningCombinations.length; i++) {
+        const [a, b, c] = winningCombinations[i];
+        if (gameBoard[a] === player && gameBoard[b] === player && gameBoard[c] === 0) {
+            return handlePlayerTurn(c);
+        }
+        if (gameBoard[a] === player && gameBoard[c] === player && gameBoard[b] === 0) {
+            return handlePlayerTurn(b);
+        }
+        if (gameBoard[b] === player && gameBoard[c] === player && gameBoard[a] === 0) {
+            return handlePlayerTurn(a);
+        }
+    }
+
+    let emptyCells = [];
+    gameBoard.forEach((cell, index) => {
+        if (cell === 0) {
+            emptyCells.push(index);
+        }
+    });
+
+    if (emptyCells.length === 0) return;
+
+    const randomIndex = Math.floor(Math.random() * emptyCells.length);
+    const cpuChoice = emptyCells[randomIndex];
+
+    handlePlayerTurn(cpuChoice);
 }
 
 const handleStats = (turnPlayer) => {
@@ -83,23 +136,23 @@ export function resetRound() {
 export function returnToMenu() {
     const app = document.getElementById('app');
     app.innerHTML = '';
-    import('./menu.js').then(module => {
-        module.renderMenu();
-    });
+    renderMenu();
 }
 
-export function renderGame(result = null) {
+export function renderGame(result = null, winningCombo = []) {
     const app = document.getElementById('app');
     app.innerHTML = '';
     let game = document.createElement('div');
     game.id = "game";
 
     game.appendChild(renderGameHeader(turnPlayer));
-    game.appendChild(renderGameBoard(handlePlayerTurn, gameBoard));
+    game.appendChild(renderGameBoard(handlePlayerTurn, gameBoard, winningCombo, result, turnPlayer));
     game.appendChild(renderGameStats(stats, gameMode, symbol));
 
     if (result !== null) {
-        game.appendChild(renderWinner(result, gameMode, symbol));
+        setTimeout(() => {
+            game.appendChild(renderWinner(result, gameMode, symbol));
+        }, 1000);
     }
 
     app.appendChild(game);

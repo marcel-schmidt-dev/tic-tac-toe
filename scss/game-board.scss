@@ -4,6 +4,20 @@
     gap: 20px;
     margin: 20px 0;
 
+    &.x .game-cell:not(.x):not(.o):hover {
+        background-image: url('../assets/icon-x-outline.svg');
+        background-size: 64px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    &.o .game-cell:not(.x):not(.o):hover {
+        background-image: url('../assets/icon-o-outline.svg');
+        background-size: 64px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
     .game-cell {
         width: 100%;
         aspect-ratio: 1/1;
@@ -26,6 +40,22 @@
 
         &.o svg {
             fill: $light-yellow;
+        }
+
+        &.win-o {
+            background-color: $light-yellow;
+
+            svg {
+                fill: $semi-dark-navy;
+            }
+        }
+
+        &.win-x {
+            background-color: $light-blue;
+
+            svg {
+                fill: $semi-dark-navy;
+            }
         }
     }
 }
